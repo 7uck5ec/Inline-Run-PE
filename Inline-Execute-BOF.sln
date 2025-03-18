@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Inline-Execute-BOF", "Inline-Execute-BOF.vcxproj", "{A9D75285-BB35-4ED3-B0B6-9A9D75C93FE9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		BOF|x64 = BOF|x64
+		BOF|x86 = BOF|x86
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9D75285-BB35-4ED3-B0B6-9A9D75C93FE9}.BOF|x64.ActiveCfg = BOF|x64
+		{A9D75285-BB35-4ED3-B0B6-9A9D75C93FE9}.BOF|x64.Build.0 = BOF|x64
+		{A9D75285-BB35-4ED3-B0B6-9A9D75C93FE9}.BOF|x86.ActiveCfg = BOF|Win32
+		{A9D75285-BB35-4ED3-B0B6-9A9D75C93FE9}.BOF|x86.Build.0 = BOF|Win32
+		{A9D75285-BB35-4ED3-B0B6-9A9D75C93FE9}.Debug|x64.ActiveCfg = Debug|x64
+		{A9D75285-BB35-4ED3-B0B6-9A9D75C93FE9}.Debug|x64.Build.0 = Debug|x64
+		{A9D75285-BB35-4ED3-B0B6-9A9D75C93FE9}.Debug|x86.ActiveCfg = Debug|Win32
+		{A9D75285-BB35-4ED3-B0B6-9A9D75C93FE9}.Debug|x86.Build.0 = Debug|Win32
+		{A9D75285-BB35-4ED3-B0B6-9A9D75C93FE9}.Release|x64.ActiveCfg = Release|x64
+		{A9D75285-BB35-4ED3-B0B6-9A9D75C93FE9}.Release|x64.Build.0 = Release|x64
+		{A9D75285-BB35-4ED3-B0B6-9A9D75C93FE9}.Release|x86.ActiveCfg = Release|Win32
+		{A9D75285-BB35-4ED3-B0B6-9A9D75C93FE9}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6D029085-EA87-4F41-B93B-21F29852CF2A}
+	EndGlobalSection
+EndGlobal

